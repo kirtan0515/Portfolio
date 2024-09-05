@@ -25,6 +25,10 @@ import meta from "./company/meta.png";
 import shopify from "./company/shopify.png";
 import starbucks from "./company/starbucks.png";
 import tesla from "./company/tesla.png";
+import Nupaths from "./company/nupaths.jpeg";
+import giant from "./company/giant.jpeg";
+import HeirAtlas from "./company/HeirAtlas.png";
+import codeninjas from "./company/codeninjas.jpeg";
 
 import carrent from "./carrent.png";
 import jobit from "./jobit.png";
@@ -55,8 +59,12 @@ export {
   meta,
   shopify,
   starbucks,
+  Nupaths,
+  giant,
   tesla,
   carrent,
   jobit,
   tripguide,
+  HeirAtlas,
+  codeninjas,
 };
