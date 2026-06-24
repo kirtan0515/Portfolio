@@ -1,264 +1,74 @@
 "use client";
 
 import { motion } from "framer-motion";
-import SectionHeader from "./ui/SectionHeader";
 
-const skillGroups = [
-  {
-    category: "Languages",
-    color: "indigo",
-    skills: [
-      { name: "Python", level: "primary" },
-      { name: "JavaScript", level: "primary" },
-      { name: "TypeScript", level: "primary" },
-      { name: "Java", level: "primary" },
-      { name: "C++", level: "primary" },
-      { name: "Go", level: "primary" },
-      { name: "SQL", level: "primary" },
-    ],
-  },
-  {
-    category: "Frontend / Mobile",
-    color: "cyan",
-    skills: [
-      { name: "React.js", level: "primary" },
-      { name: "Next.js", level: "primary" },
-      { name: "Tailwind CSS", level: "primary" },
-      { name: "HTML / CSS", level: "primary" },
-      { name: "Mobile Prototyping", level: "primary" },
-    ],
-  },
-  {
-    category: "Backend / APIs",
-    color: "violet",
-    skills: [
-      { name: "FastAPI", level: "primary" },
-      { name: "REST APIs", level: "primary" },
-      { name: "GraphQL", level: "primary" },
-      { name: "Scalable API Design", level: "primary" },
-    ],
-  },
-  {
-    category: "AWS",
-    color: "amber",
-    skills: [
-      { name: "EC2", level: "primary" },
-      { name: "Lambda", level: "primary" },
-      { name: "VPC", level: "primary" },
-      { name: "S3", level: "primary" },
-      { name: "RDS", level: "primary" },
-      { name: "ELB", level: "primary" },
-      { name: "IAM", level: "primary" },
-      { name: "CloudWatch", level: "primary" },
-      { name: "Amplify", level: "primary" },
-      { name: "AppSync", level: "primary" },
-      { name: "DynamoDB", level: "primary" },
-    ],
-  },
-  {
-    category: "DevOps / Tools",
-    color: "emerald",
-    skills: [
-      { name: "Docker", level: "primary" },
-      { name: "GitHub Actions", level: "primary" },
-      { name: "CI/CD", level: "primary" },
-      { name: "Linux", level: "primary" },
-      { name: "Terraform", level: "primary" },
-      { name: "Git", level: "primary" },
-      { name: "Agile", level: "primary" },
-      { name: "Kubernetes", level: "learning" },
-    ],
-  },
-  {
-    category: "Networking",
-    color: "rose",
-    skills: [
-      { name: "TCP/IP", level: "primary" },
-      { name: "DNS", level: "primary" },
-      { name: "HTTP/S", level: "primary" },
-      { name: "Routing", level: "primary" },
-      { name: "Load Balancing", level: "primary" },
-      { name: "Security Groups", level: "primary" },
-    ],
-  },
-  {
-    category: "Databases",
-    color: "cyan",
-    skills: [
-      { name: "PostgreSQL", level: "primary" },
-      { name: "MySQL", level: "primary" },
-      { name: "DynamoDB", level: "primary" },
-    ],
-  },
-  {
-    category: "AI / ML",
-    color: "violet",
-    skills: [
-      { name: "LLM APIs", level: "primary" },
-      { name: "RAG Pipelines", level: "primary" },
-      { name: "Embeddings", level: "primary" },
-      { name: "Prompt Engineering", level: "primary" },
-      { name: "Output Evaluation", level: "primary" },
-      { name: "FAISS", level: "primary" },
-      { name: "Pinecone", level: "primary" },
-      { name: "LangChain", level: "learning" },
-    ],
-  },
+const allSkills = [
+  "Python", "TypeScript", "JavaScript", "Java", "Go", "C++", "SQL",
+  "React", "Next.js", "FastAPI", "GraphQL", "REST APIs",
+  "AWS EC2", "Lambda", "S3", "RDS", "DynamoDB", "VPC", "IAM",
+  "Docker", "Terraform", "GitHub Actions", "CI/CD", "Linux",
+  "LLM APIs", "RAG Pipelines", "Embeddings", "LangChain",
+  "PostgreSQL", "Kubernetes", "CloudWatch", "AppSync",
 ];
 
-const colorMap: Record<string, { pill: string; pillLearning: string; label: string; dot: string }> = {
-  indigo: {
-    pill: "bg-indigo-500/10 text-indigo-300 border-indigo-500/20 hover:bg-indigo-500/20",
-    pillLearning: "bg-indigo-500/5 text-indigo-400/70 border-indigo-500/10 border-dashed",
-    label: "text-indigo-400",
-    dot: "bg-indigo-400",
-  },
-  cyan: {
-    pill: "bg-cyan-500/10 text-cyan-300 border-cyan-500/20 hover:bg-cyan-500/20",
-    pillLearning: "bg-cyan-500/5 text-cyan-400/70 border-cyan-500/10 border-dashed",
-    label: "text-cyan-400",
-    dot: "bg-cyan-400",
-  },
-  violet: {
-    pill: "bg-violet-500/10 text-violet-300 border-violet-500/20 hover:bg-violet-500/20",
-    pillLearning: "bg-violet-500/5 text-violet-400/70 border-violet-500/10 border-dashed",
-    label: "text-violet-400",
-    dot: "bg-violet-400",
-  },
-  amber: {
-    pill: "bg-amber-500/10 text-amber-300 border-amber-500/20 hover:bg-amber-500/20",
-    pillLearning: "bg-amber-500/5 text-amber-400/70 border-amber-500/10 border-dashed",
-    label: "text-amber-400",
-    dot: "bg-amber-400",
-  },
-  emerald: {
-    pill: "bg-emerald-500/10 text-emerald-300 border-emerald-500/20 hover:bg-emerald-500/20",
-    pillLearning: "bg-emerald-500/5 text-emerald-400/70 border-emerald-500/10 border-dashed",
-    label: "text-emerald-400",
-    dot: "bg-emerald-400",
-  },
-  rose: {
-    pill: "bg-rose-500/10 text-rose-300 border-rose-500/20 hover:bg-rose-500/20",
-    pillLearning: "bg-rose-500/5 text-rose-400/70 border-rose-500/10 border-dashed",
-    label: "text-rose-400",
-    dot: "bg-rose-400",
-  },
-};
+const row1 = allSkills.slice(0, 16);
+const row2 = allSkills.slice(16);
 
 export default function Skills() {
   return (
     <section
       id="skills"
-      className="section-padding relative"
+      className="relative py-24 sm:py-32 md:py-48 z-10 overflow-hidden"
       aria-labelledby="skills-heading"
     >
-      <div
-        className="absolute inset-0 bg-gradient-to-b from-transparent via-indigo-950/10 to-transparent pointer-events-none"
-        aria-hidden="true"
-      />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <SectionHeader
-          eyebrow="Technical Skills"
-          title="The stack I"
-          titleHighlight="build with"
-          description="Technologies I use to design, build, and deploy cloud-native and AI-powered systems. Dashed borders = actively learning."
-        />
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {skillGroups.map((group, groupIndex) => {
-            const colors = colorMap[group.color];
-            return (
-              <motion.div
-                key={group.category}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, delay: groupIndex * 0.07 }}
-                className="glass rounded-2xl p-5 border border-white/5 card-hover"
-              >
-                {/* Category header */}
-                <div className="flex items-center gap-2 mb-4">
-                  <span
-                    className={`w-2 h-2 rounded-full ${colors.dot}`}
-                    aria-hidden="true"
-                  />
-                  <h3
-                    className={`text-xs font-semibold uppercase tracking-widest font-mono ${colors.label}`}
-                  >
-                    {group.category}
-                  </h3>
-                </div>
-
-                {/* Skills pills */}
-                <div
-                  className="flex flex-wrap gap-2"
-                  role="list"
-                  aria-label={`${group.category} skills`}
-                >
-                  {group.skills.map((skill, skillIndex) => (
-                    <motion.span
-                      key={skill.name}
-                      role="listitem"
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{
-                        duration: 0.3,
-                        delay: groupIndex * 0.04 + skillIndex * 0.03,
-                      }}
-                      whileHover={{ scale: 1.05 }}
-                      className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border cursor-default transition-all duration-200 ${
-                        skill.level === "learning"
-                          ? colors.pillLearning
-                          : colors.pill
-                      }`}
-                      title={skill.level === "learning" ? "Currently learning" : undefined}
-                    >
-                      {skill.name}
-                      {skill.level === "learning" && (
-                        <span className="ml-1 text-[9px] opacity-60">~</span>
-                      )}
-                    </motion.span>
-                  ))}
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
-
-        {/* Legend + currently exploring */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-12 sm:mb-20">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 glass rounded-2xl p-5 border border-indigo-500/20"
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="flex items-center gap-4 text-xs text-slate-500 shrink-0">
-            <span className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded border border-indigo-500/20 bg-indigo-500/10 inline-block" />
-              Active
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded border border-dashed border-indigo-500/20 bg-indigo-500/5 inline-block" />
-              Learning
-            </span>
-          </div>
-          <div className="w-px h-4 bg-white/10 hidden sm:block" aria-hidden="true" />
-          <div className="flex items-center gap-2 flex-wrap">
-            <span className="w-2 h-2 rounded-full bg-indigo-400 animate-pulse" aria-hidden="true" />
-            <span className="text-xs font-mono text-indigo-400 font-semibold">Also exploring:</span>
-            {["Rust", "OpenAI Assistants API", "AWS CDK", "LangChain"].map((tech) => (
+          <p className="text-[10px] sm:text-xs font-mono text-white/30 uppercase tracking-[0.3em] mb-6 sm:mb-8">
+            [ 002 — Stack ]
+          </p>
+          <h2 className="heading-xl max-w-3xl text-white/90">
+            Technologies I
+            <br className="hidden sm:block" />
+            <span className="text-gradient"> build with</span>
+          </h2>
+        </motion.div>
+      </div>
+
+      {/* Marquee rows */}
+      <div className="space-y-3 sm:space-y-4">
+        <div className="relative overflow-hidden">
+          <div className="marquee-track">
+            {[...row1, ...row1, ...row1].map((skill, i) => (
               <span
-                key={tech}
-                className="px-2.5 py-1 rounded-lg text-xs font-medium bg-indigo-500/5 text-indigo-300/70 border border-dashed border-indigo-500/15"
+                key={`r1-${i}`}
+                className="inline-flex items-center px-4 sm:px-6 py-2.5 sm:py-3 mx-1.5 sm:mx-2 rounded-full border border-white/8 bg-white/[0.02] text-xs sm:text-sm font-medium text-white/60 whitespace-nowrap hover:border-white/25 hover:text-white hover:bg-white/[0.05] transition-all duration-500"
               >
-                {tech}
+                {skill}
               </span>
             ))}
           </div>
-        </motion.div>
+        </div>
+
+        <div className="relative overflow-hidden">
+          <div
+            className="marquee-track"
+            style={{ animationDirection: "reverse", animationDuration: "55s" }}
+          >
+            {[...row2, ...row2, ...row2, ...row2].map((skill, i) => (
+              <span
+                key={`r2-${i}`}
+                className="inline-flex items-center px-4 sm:px-6 py-2.5 sm:py-3 mx-1.5 sm:mx-2 rounded-full border border-white/8 bg-white/[0.02] text-xs sm:text-sm font-medium text-white/60 whitespace-nowrap hover:border-white/25 hover:text-white hover:bg-white/[0.05] transition-all duration-500"
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );

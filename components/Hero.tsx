@@ -1,257 +1,87 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
-import Scene3D from "./Scene3D";
-import {
-  ArrowRight,
-  Download,
-  Mail,
-  Github,
-  Linkedin,
-  ChevronDown,
-} from "lucide-react";
-
-const ROLES = [
-  "Cloud Engineer",
-  "AWS Solutions Architect",
-  "Full-Stack Developer",
-  "AI Systems Builder",
-  "Backend Engineer",
-];
-
-function TypingText({ words }: { words: string[] }) {
-  const [index, setIndex] = useState(0);
-  const [displayed, setDisplayed] = useState("");
-  const [deleting, setDeleting] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    const current = words[index];
-
-    if (!deleting && displayed === current) {
-      timeoutRef.current = setTimeout(() => setDeleting(true), 2000);
-    } else if (deleting && displayed === "") {
-      setDeleting(false);
-      setIndex((i) => (i + 1) % words.length);
-    } else {
-      const speed = deleting ? 40 : 80;
-      timeoutRef.current = setTimeout(() => {
-        setDisplayed((prev) =>
-          deleting ? prev.slice(0, -1) : current.slice(0, prev.length + 1)
-        );
-      }, speed);
-    }
-
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, [displayed, deleting, index, words]);
-
-  return (
-    <span className="gradient-text">
-      {displayed}
-      <span className="cursor-blink text-indigo-400">|</span>
-    </span>
-  );
-}
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.12, delayChildren: 0.2 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-};
 
 export default function Hero() {
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
-      aria-label="Hero section"
-    >
-      {/* 3D Background Scene */}
-      <Scene3D />
-
-      {/* Radial hero gradient overlay */}
-      <div
-        className="absolute inset-0 bg-hero-gradient pointer-events-none"
-        aria-hidden="true"
-      />
-
-      {/* Bottom fade to background */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#050810] to-transparent pointer-events-none"
-        aria-hidden="true"
-      />
-
-      {/* Content */}
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {/* Status badge */}
-          <motion.div variants={itemVariants} className="mb-8">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-emerald-500/20 text-sm text-emerald-300">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
-              Currently interning · Open to full-time &amp; new-grad roles
+    <section className="relative min-h-[200vh]" aria-label="Hero">
+      <div className="sticky top-0 h-screen flex flex-col items-center justify-center z-10 pointer-events-none">
+        <div className="text-center pointer-events-auto px-4 sm:px-6">
+          {/* Status */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="mb-8 sm:mb-10"
+          >
+            <span className="status-pill">
+              <span className="w-2 h-2 rounded-full bg-white/80 animate-pulse" />
+              Available for full-time roles
             </span>
           </motion.div>
 
           {/* Name */}
-          <motion.div variants={itemVariants}>
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-white leading-none mb-4">
-              Kirtan{" "}
-              <span className="relative">
-                Patel
-                <motion.span
-                  className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-violet-500 to-cyan-500 rounded-full"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ delay: 1, duration: 0.8, ease: "easeOut" }}
-                  aria-hidden="true"
-                />
-              </span>
-            </h1>
-          </motion.div>
-
-          {/* Typing role */}
-          <motion.div variants={itemVariants} className="mb-6">
-            <p className="text-2xl sm:text-3xl md:text-4xl font-semibold text-slate-300 h-12 flex items-center justify-center">
-              <TypingText words={ROLES} />
-            </p>
-          </motion.div>
-
-          {/* Value prop */}
-          <motion.p
-            variants={itemVariants}
-            className="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed mb-10"
+          <motion.h1
+            initial={{ opacity: 0, y: 80 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
+            className="display-text mb-4 sm:mb-6"
           >
-            Software Engineer building{" "}
-            <span className="text-indigo-300 font-medium">
-              backend, cloud, and AI-enabled products
-            </span>{" "}
-            with Python, FastAPI, React, Next.js, AWS, and LLM APIs.
-            Currently interning at{" "}
-            <span className="text-emerald-300 font-medium">SE&amp;M Solutions</span>{" "}
-            · AWS Certified · Harrisburg University.
+            <span className="block text-white">KIRTAN</span>
+            <span className="block text-gradient">PATEL</span>
+          </motion.h1>
+
+          {/* Role */}
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="text-sm sm:text-base md:text-lg text-white/40 font-light tracking-widest uppercase mb-10 sm:mb-12 max-w-md mx-auto"
+          >
+            Cloud Engineer · AI Builder · AWS Certified
           </motion.p>
 
-          {/* CTA buttons */}
+          {/* CTAs */}
           <motion.div
-            variants={itemVariants}
-            className="flex flex-wrap items-center justify-center gap-4 mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <motion.a
+            <a
               href="#projects"
-              onClick={(e) => {
-                e.preventDefault();
-                document
-                  .getElementById("projects")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="group flex items-center gap-2 px-7 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm shadow-glow hover:shadow-glow-lg transition-all duration-200"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              aria-label="View my projects"
+              className="px-8 py-4 rounded-full bg-white text-black font-bold text-sm hover:bg-white/90 hover:shadow-[0_0_60px_rgba(255,255,255,0.2)] transition-all duration-500 w-full sm:w-auto text-center"
             >
-              View Projects
-              <ArrowRight
-                className="w-4 h-4 group-hover:translate-x-1 transition-transform"
-                aria-hidden="true"
-              />
-            </motion.a>
-
-            <motion.a
-              href="/resume.pdf"
-              download
-              className="flex items-center gap-2 px-7 py-3.5 rounded-xl glass border border-white/10 hover:border-indigo-500/40 text-white font-semibold text-sm hover:bg-indigo-500/5 transition-all duration-200"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              aria-label="Download resume PDF"
-            >
-              <Download className="w-4 h-4" aria-hidden="true" />
-              Download Resume
-            </motion.a>
-
-            <motion.a
+              Explore Work
+            </a>
+            <a
               href="#contact"
-              onClick={(e) => {
-                e.preventDefault();
-                document
-                  .getElementById("contact")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
-              className="flex items-center gap-2 px-7 py-3.5 rounded-xl text-slate-300 hover:text-white font-semibold text-sm hover:bg-white/5 transition-all duration-200 border border-transparent hover:border-white/10"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              aria-label="Contact me"
+              className="px-8 py-4 rounded-full border border-white/20 text-white/80 font-medium text-sm hover:border-white/50 hover:text-white transition-all duration-500 w-full sm:w-auto text-center"
             >
-              <Mail className="w-4 h-4" aria-hidden="true" />
-              Contact Me
-            </motion.a>
+              Get in Touch
+            </a>
           </motion.div>
+        </div>
 
-          {/* Social links */}
+        {/* Scroll hint */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2.2, duration: 1 }}
+          className="absolute bottom-8 sm:bottom-10 left-1/2 -translate-x-1/2"
+        >
           <motion.div
-            variants={itemVariants}
-            className="flex items-center justify-center gap-4"
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+            className="flex flex-col items-center gap-3"
           >
-            <a
-              href="https://github.com/kirtan0515"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2.5 rounded-lg text-slate-500 hover:text-white hover:bg-white/5 transition-all duration-200"
-              aria-label="GitHub profile"
-            >
-              <Github className="w-5 h-5" aria-hidden="true" />
-            </a>
-            <a
-              href="https://linkedin.com/in/kirtanpatel0515"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-2.5 rounded-lg text-slate-500 hover:text-white hover:bg-white/5 transition-all duration-200"
-              aria-label="LinkedIn profile"
-            >
-              <Linkedin className="w-5 h-5" aria-hidden="true" />
-            </a>
-            <a
-              href="mailto:kirtan.patel0515@gmail.com"
-              className="p-2.5 rounded-lg text-slate-500 hover:text-white hover:bg-white/5 transition-all duration-200"
-              aria-label="Send email"
-            >
-              <Mail className="w-5 h-5" aria-hidden="true" />
-            </a>
+            <span className="text-[9px] font-mono text-white/20 uppercase tracking-[0.4em]">
+              Scroll
+            </span>
+            <div className="w-px h-10 bg-gradient-to-b from-white/20 to-transparent" />
           </motion.div>
         </motion.div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-600"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 0.6 }}
-        aria-hidden="true"
-      >
-        <span className="text-xs font-mono tracking-widest uppercase">
-          scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ChevronDown className="w-4 h-4" />
-        </motion.div>
-      </motion.div>
     </section>
   );
 }

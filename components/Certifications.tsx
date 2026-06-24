@@ -1,186 +1,81 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Award, ExternalLink, CheckCircle2, Shield } from "lucide-react";
-import SectionHeader from "./ui/SectionHeader";
+import { ArrowUpRight } from "lucide-react";
+import Card3D from "./Card3D";
 
-const certifications = [
+const certs = [
   {
-    title: "AWS Certified Solutions Architect",
-    subtitle: "Associate",
-    issuer: "Amazon Web Services",
+    title: "Solutions Architect",
+    code: "SAA-C03",
     year: "2024",
-    credentialId: "AWS-SAA-C03",
-    description:
-      "Validates expertise in designing distributed systems on AWS — covering compute, storage, networking, security, and cost optimization for production workloads.",
-    skills: ["VPC", "EC2", "S3", "RDS", "IAM", "CloudFormation", "Route 53", "ELB"],
-    color: "amber",
-    icon: Shield,
-    badge: "SAA-C03",
-    verifyUrl: "https://www.credly.com/badges/6c2276d4-4d7a-4b40-b46d-e665c409db8d/public_url",
+    url: "https://www.credly.com/badges/6c2276d4-4d7a-4b40-b46d-e665c409db8d/public_url",
+    description: "Designing distributed systems on AWS — compute, storage, networking, security, cost optimization.",
   },
   {
-    title: "AWS Certified Developer",
-    subtitle: "Associate",
-    issuer: "Amazon Web Services",
+    title: "Developer Associate",
+    code: "DVA-C02",
     year: "2024",
-    credentialId: "AWS-DVA-C02",
-    description:
-      "Demonstrates proficiency in developing, deploying, and debugging cloud-based applications using AWS services including Lambda, DynamoDB, API Gateway, and CI/CD pipelines.",
-    skills: ["Lambda", "DynamoDB", "API Gateway", "CodePipeline", "CloudWatch", "Cognito", "SQS", "SNS"],
-    color: "cyan",
-    icon: Award,
-    badge: "DVA-C02",
-    verifyUrl: "https://www.credly.com/badges/a3f8bbe2-e0fd-4d14-9e50-4a2421e96d05/public_url",
+    url: "https://www.credly.com/badges/a3f8bbe2-e0fd-4d14-9e50-4a2421e96d05/public_url",
+    description: "Developing, deploying, and debugging cloud applications with Lambda, DynamoDB, API Gateway, CI/CD.",
   },
 ];
-
-const colorMap: Record<string, {
-  border: string;
-  glow: string;
-  badge: string;
-  skill: string;
-  icon: string;
-  accent: string;
-}> = {
-  amber: {
-    border: "border-amber-500/30",
-    glow: "shadow-[0_0_40px_rgba(245,158,11,0.15)]",
-    badge: "bg-amber-500/15 text-amber-300 border-amber-500/30",
-    skill: "bg-amber-500/10 text-amber-300 border-amber-500/20",
-    icon: "text-amber-400 bg-amber-500/10",
-    accent: "from-amber-500/20 to-transparent",
-  },
-  cyan: {
-    border: "border-cyan-500/30",
-    glow: "shadow-[0_0_40px_rgba(6,182,212,0.15)]",
-    badge: "bg-cyan-500/15 text-cyan-300 border-cyan-500/30",
-    skill: "bg-cyan-500/10 text-cyan-300 border-cyan-500/20",
-    icon: "text-cyan-400 bg-cyan-500/10",
-    accent: "from-cyan-500/20 to-transparent",
-  },
-};
 
 export default function Certifications() {
   return (
     <section
       id="certifications"
-      className="section-padding relative"
+      className="relative py-24 sm:py-32 md:py-48 z-10"
       aria-labelledby="certifications-heading"
     >
-      <div
-        className="absolute inset-0 bg-gradient-to-b from-transparent via-amber-950/5 to-transparent pointer-events-none"
-        aria-hidden="true"
-      />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-16 sm:mb-24"
+        >
+          <p className="text-[10px] sm:text-xs font-mono text-white/30 uppercase tracking-[0.3em] mb-6 sm:mb-8">
+            [ 005 — Certifications ]
+          </p>
+          <h2 className="heading-xl max-w-3xl text-white/90">
+            AWS <span className="text-gradient">Certified</span>
+          </h2>
+        </motion.div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <SectionHeader
-          eyebrow="Certifications"
-          title="AWS Certified"
-          titleHighlight="Engineer"
-          description="Industry-recognized credentials validating real-world cloud architecture and development expertise."
-        />
-
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          {certifications.map((cert, i) => {
-            const colors = colorMap[cert.color];
-            return (
-              <motion.div
-                key={cert.credentialId}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: i * 0.15 }}
-                whileHover={{ y: -4 }}
-                className={`relative glass rounded-2xl border ${colors.border} ${colors.glow} overflow-hidden transition-all duration-300`}
-              >
-                {/* Top accent gradient */}
-                <div
-                  className={`absolute top-0 left-0 right-0 h-px bg-gradient-to-r ${colors.accent}`}
-                  aria-hidden="true"
-                />
-
-                <div className="p-8">
-                  {/* Header */}
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="flex items-center gap-4">
-                      <div
-                        className={`w-14 h-14 rounded-xl ${colors.icon} flex items-center justify-center`}
-                        aria-hidden="true"
-                      >
-                        <cert.icon className="w-7 h-7" />
-                      </div>
-                      <div>
-                        <div
-                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-mono font-semibold border ${colors.badge} mb-2`}
-                        >
-                          <CheckCircle2 className="w-3 h-3" aria-hidden="true" />
-                          {cert.badge}
-                        </div>
-                        <p className="text-xs text-slate-500 font-medium">
-                          {cert.issuer} · {cert.year}
-                        </p>
-                      </div>
-                    </div>
+        <div className="grid sm:grid-cols-2 gap-4 sm:gap-6 max-w-4xl">
+          {certs.map((cert, i) => (
+            <motion.div
+              key={cert.code}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <a href={cert.url} target="_blank" rel="noopener noreferrer" className="block h-full">
+                <Card3D className="p-6 sm:p-8 md:p-10 h-full group">
+                  <div className="flex items-center justify-between mb-5 sm:mb-6">
+                    <span className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-white/50 text-[10px] sm:text-xs font-mono font-bold">
+                      {cert.code}
+                    </span>
+                    <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 text-white/20 group-hover:text-white/60 transition-colors duration-300" />
                   </div>
 
-                  {/* Title */}
-                  <h3 className="text-xl font-bold text-white mb-1">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2 group-hover:text-white/90 transition-colors">
                     {cert.title}
                   </h3>
-                  <p className="text-sm text-slate-400 font-medium mb-4">
-                    {cert.subtitle}
+                  <p className="text-xs sm:text-sm text-white/30 font-mono mb-3 sm:mb-4">
+                    Amazon Web Services · {cert.year}
                   </p>
-
-                  {/* Description */}
-                  <p className="text-sm text-slate-400 leading-relaxed mb-6">
+                  <p className="text-xs sm:text-sm text-white/40 leading-relaxed">
                     {cert.description}
                   </p>
-
-                  {/* Skills covered */}
-                  <div className="mb-6">
-                    <p className="text-xs text-slate-500 uppercase tracking-wider font-mono mb-3">
-                      Key Services
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {cert.skills.map((skill) => (
-                        <span
-                          key={skill}
-                          className={`px-2.5 py-1 rounded-md text-xs font-medium border ${colors.skill}`}
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Verify link */}
-                  <a
-                    href={cert.verifyUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-white transition-colors"
-                    aria-label={`Verify ${cert.title} certification`}
-                  >
-                    <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
-                    Verify Credential
-                  </a>
-                </div>
-              </motion.div>
-            );
-          })}
+                </Card3D>
+              </a>
+            </motion.div>
+          ))}
         </div>
-
-        {/* Credibility note */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center text-sm text-slate-600 mt-8 font-mono"
-        >
-          Both certifications earned while actively building production-style AWS projects
-        </motion.p>
       </div>
     </section>
   );
